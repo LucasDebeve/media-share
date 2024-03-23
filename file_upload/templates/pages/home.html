@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}Accueil{% endblock title %}</h2>
+{% endblock header %}
+
+{% block content %}
+  <form action="{{ url_for('pages.upload') }}" method="post" enctype="multipart/form-data">
+    <label for="file-upload" class="form-label">
+      Choisir un fichier
+    </label>
+    <input type="file" name="file" id="file-upload" class="form-control mb-3" required>
+    <input type="submit" value="Téléverser" class="btn btn-primary w-100">
+  </form>
+  <div class="files w-100">
+  {% for file in files %}
+    <div class="file">
+      {% if file.endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
+        <img src="{{ url_for('pages.show', filename=file) }}" alt="{{ file }}" height="50" card-img-top>
+      {% else %}
+        {# Display a file icon and name #}
+        <div class="material-symbols-outlined">
+          description
+        </div>
+      {% endif %}
+      {# Display the file name with max length of 18 characters and extension #}
+      <p>
+        {% if file|length > 18 %}
+          {{ file[:10] }}...{{ file[-4:] }}
+        {% else %}
+          {{ file }}
+        {% endif %}
+      </p>
+      {# Display the file upload date #}
+      <p class="text-secondary">{{ file|file_date }}</p>
+      {# Display the file size #}
+      <p class="text-secondary">{{ file|file_size }}</p>
+      {# Display the file actions #}
+      <span class="d-flex gap-3">
+        <a href="{{ url_for('pages.show', filename=file) }}" class="card-link">
+          <span class="material-symbols-outlined">
+            visibility
+          </span>
+        </a>
+        <a href="{{ url_for('pages.download', filename=file) }}" class="card-link">
+          <span class="material-symbols-outlined">
+            download
+          </span>
+        </a>
+        <a href="{{ url_for('pages.delete', filename=file) }}" class="card-link text-danger">
+          <span class="material-symbols-outlined">
+            delete
+          </span>
+        </a>
+      </span>
+    </div>
+  {% endfor %}
+  </div>
+{% endblock content %}
