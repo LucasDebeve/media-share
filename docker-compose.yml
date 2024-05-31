@@ -6,3 +6,4 @@ services:
       - "8082:5000"
     volumes:
       - ./uploads:/app/uploads
+      - .:/app

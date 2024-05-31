@@ -18,8 +18,8 @@ def home():
     for file in os.listdir('uploads'):
         if file.startswith('keep_'):
             continue
-        if os.path.getmtime(f'uploads/{file}') < time.time() - (3 * 24 * 60 * 60):
-                os.remove(f'uploads/{file}')
+        if os.path.getmtime(f'uploads/{file}') < time.time() - (3 * 24 * 60 * 60): # 3 days
+                os.remove(f'uploads/{file}') # Remove file if it is older than 3 days
     return render_template("pages/home.html", files=os.listdir('uploads'))
 
 @bp.route('/upload', methods=['GET', 'POST'])
