@@ -58,11 +58,11 @@
             </div>
             <img src="{{ url_for('static', filename='img/recadre.jpg') }}" alt="?" class="w-10 h-10 p-1 ml-5 rounded-full ring-2 ring-gray-300 object-cover">
         </header>
-        <main class="px-8 py-2">
+        <main class="flex-1">
             <div>
                 {% block header %}{% endblock header %}
                 {% for category, message in get_flashed_messages(with_categories=true) %}
-                <div class="p-4 mb-4 text-sm {{ 'text-red-800 bg-red-100 dark:bg-gray-800 dark:text-red-400' if category == 'error' else 'text-green-800 bg-green-100 dark:bg-gray-800 dark:text-green-400'}} rounded-lg" role="alert">
+                <div class="m-4 p-4 text-sm {{ 'text-red-800 bg-red-100 dark:bg-gray-800 dark:text-red-400' if category == 'error' else 'text-green-800 bg-green-100 dark:bg-gray-800 dark:text-green-400'}} rounded-lg" role="alert">
                     {{ message }}
                 </div>
                 {% endfor %}
