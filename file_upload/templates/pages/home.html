@@ -5,24 +5,22 @@
 {% endblock header %}
 
 {% block content %}
-  <form action="{{ url_for('pages.upload') }}" method="post" enctype="multipart/form-data">
-    <label for="file-upload" class="form-label">
-      Choisir un fichier
-    </label>
-    <input type="file" name="file" id="file-upload" class="form-control mb-3" required>
-    <input type="submit" value="Téléverser" class="btn btn-primary w-100">
-  </form>
-  <div class="files w-100">
+  <div class="w-full grid grid-cols-4 gap-4">
   {% for file in files %}
-    <div class="file">
-      {% if file.endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
-        <img src="{{ url_for('pages.show', filename=file) }}" alt="{{ file }}" height="50" card-img-top>
-      {% else %}
-        {# Display a file icon and name #}
-        <div class="material-symbols-outlined">
-          description
-        </div>
-      {% endif %}
+    <div class="flex flex-col gap-4 rounded-3xl bg-slate-50">
+      <div class="flex justify-between pt-5 px-4">
+        {% if file.endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
+          <img src="{{ url_for('pages.show', filename=file) }}" alt="{{ file }}" height="50" class="rounded-lg object-cover h-16 w-16">
+        {% else %}
+          {# Display a file icon and name #}
+          <span class="material-symbols-outlined">
+            description
+          </span>
+        {% endif %}
+        <span class="material-symbols-outlined">
+          more_vert
+        </span>
+      </div>
       {# Display the file name with max length of 18 characters and extension #}
       <p>
         {% if file|length > 18 %}
@@ -36,7 +34,7 @@
       {# Display the file size #}
       <p class="text-secondary">{{ file|file_size }}</p>
       {# Display the file actions #}
-      <span class="d-flex gap-3">
+      <div class="d-flex gap-3">
         <a href="{{ url_for('pages.show', filename=file) }}" class="card-link">
           <span class="material-symbols-outlined">
             visibility
@@ -52,8 +50,12 @@
             delete
           </span>
         </a>
-      </span>
+      </div>
+      <div class="bg-neutral-300 px-4 py-5 rounded-b-3xl font-bold">
+      {{ file|file_size }}
     </div>
+    </div>
+    
   {% endfor %}
   </div>
 {% endblock content %}

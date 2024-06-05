@@ -1,5 +1,54 @@
-<nav>
-    <ul class="list-group">
-      <li class="list-group-item"><a href="{{ url_for('pages.home') }}">Home</a></li>
+<nav class="bg-gray-950 text-slate-50 w-1/5 min-w-fit h-screen flex flex-col gap-2.5 px-3 md:px-12 py-5 transition-transform">
+    <div class="flex">
+        <span class="material-symbols-outlined align-middle text-8xl">
+            cloud
+        </span>
+        <h1 class="hidden md:block text-4xl">
+            MERCURY</br>CLOUD
+        </h1>
+    </div>
+    <ul class="flex-1 flex flex-col pb-32 gap-5 justify-center">
+        <li class="flex justify-center md:justify-start p-5 rounded-2xl bg-violet-800 hover:cursor-pointer active:bg-violet-700 transition-colors">
+            <a href="/">
+                <span class="material-symbols-outlined align-middle text-2xl mr-2">
+                    folder
+                </span>
+                <span class="hidden md:inline">
+                Mon Cloud
+                </span>
+            </a>
+        </li>
+        <li class="flex justify-center md:justify-start p-5 rounded-2xl hover:bg-gray-900 hover:cursor-pointer active:bg-gray-800 transition-colors">
+            <a href="/">
+                <span class="material-symbols-outlined align-middle text-2xl mr-2">
+                    folder_shared
+                </span>
+                <span class="hidden md:inline">
+                    Partages
+                </span>
+            </a>
+        </li>
     </ul>
-  </nav>
+    <ul class="flex flex-col gap-5 justify-end">
+        <li class="flex justify-center md:justify-start p-5 rounded-2xl hover:bg-gray-900 hover:cursor-pointer active:bg-gray-800 transition-colors">
+            <a href="/">
+                <span class="material-symbols-outlined align-middle text-2xl mr-2">
+                    help
+                </span>
+                <span class="hidden md:inline">
+                    Besoin d'aide ?
+                </span>
+            </a>
+        </li>
+        <li class="flex justify-center md:justify-start p-5 rounded-2xl hover:bg-gray-900 hover:cursor-pointer active:bg-gray-800 transition-colors">
+            <a href="/">
+                <span class="material-symbols-outlined align-middle text-2xl mr-2">
+                    logout
+                </span>
+                <span class="hidden md:inline">
+                    Quitter
+                </span>
+            </a>
+        </li>
+    </ul>
+</nav>
