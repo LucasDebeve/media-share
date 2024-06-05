@@ -9,7 +9,7 @@ types = {
     'audio': ['mp3', 'wav', 'ogg', 'flac', 'aac'],
     'video': ['mp4', 'mkv', 'avi', 'mov', 'wmv', 'flv'],
     'présentation': ['ppt', 'pptx', 'odp'],
-    'ocument': ['doc', 'docx', 'odt', 'pdf', 'txt'],
+    'document': ['doc', 'docx', 'odt', 'pdf', 'txt'],
     'tableur': ['xls', 'xlsx', 'ods'],
     'archive': ['zip', 'rar', '7z', 'tar', 'gz'],
     'code': ['html', 'css', 'js', 'py', 'java', 'c', 'cpp', 'cs', 'php', 'rb', 'sh'],

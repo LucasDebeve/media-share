@@ -16,12 +16,12 @@ bp = Blueprint('pages', __name__)
 def home():
     if request.method == 'POST':
         if 'file' not in request.files:
-            flash('No file part', category='danger')
+            flash('No file part', category='error')
             return redirect(request.url)
         file = request.files['file']
         # Upload file if it exists
         if file.filename == '':
-            flash('No selected file', category='danger')
+            flash('No selected file', category='error')
             return redirect(request.url)
         if file:
             filename = secure_filename(file.filename)
@@ -35,6 +35,17 @@ def home():
             continue
         if os.path.getmtime(f'uploads/{file}') < time.time() - (3 * 24 * 60 * 60): # 3 days
                 os.remove(f'uploads/{file}') # Remove file if it is older than 3 days
+
+    # Get the GET parameter 'filename' and display the details of the file
+    filename = request.args.get('filename')
+    if filename:
+        file = os.path.join('uploads', filename)
+        if os.path.exists(file):
+            return render_template("pages/home.html", files=os.listdir('uploads'), fileDetails=filename)
+        else:
+            flash('File not found', category='error')
+            return redirect(url_for('pages.home'))
+    print("ya rien")
     return render_template("pages/home.html", files=os.listdir('uploads'))
 
 @bp.route('/delete/<filename>', methods=['GET', 'POST'])
