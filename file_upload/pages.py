@@ -16,18 +16,18 @@ bp = Blueprint('pages', __name__)
 def home():
     if request.method == 'POST':
         if 'file' not in request.files:
-            flash('No file part', category='error')
+            flash('Aucun fichier sélectionné', category='error')
             return redirect(request.url)
         file = request.files['file']
         # Upload file if it exists
         if file.filename == '':
-            flash('No selected file', category='error')
+            flash('Aucun fichier sélectionné', category='error')
             return redirect(request.url)
         if file:
             filename = secure_filename(file.filename)
             # Save file into uploads folder
             file.save(f'uploads/{filename}')
-            flash('File uploaded successfully', category='success')
+            flash('Fichier téléversé', category='success')
             return redirect(url_for('pages.home'))
     # Before uploading file, remove old files which are older than 3 day except file begin with 'keep_'
     for file in os.listdir('uploads'):
@@ -43,7 +43,7 @@ def home():
         if os.path.exists(file):
             return render_template("pages/home.html", files=os.listdir('uploads'), fileDetails=filename)
         else:
-            flash('File not found', category='error')
+            flash('Fichier introuvable', category='error')
             return redirect(url_for('pages.home'))
     print("ya rien")
     return render_template("pages/home.html", files=os.listdir('uploads'))
@@ -54,9 +54,9 @@ def delete(filename):
     if request.method == 'POST':
         if request.form.get('confirm') == 'yes':
             os.remove(f'uploads/{filename}')
-            flash('File deleted successfully', category='success')
+            flash('Fichier supprimé', category='success')
         else:
-            flash('Deletion cancelled', category='info')
+            flash('Suppression annulée', category='info')
         return redirect(url_for('pages.home'))
     return render_template("pages/delete.html", filename=filename)
 

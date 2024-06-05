@@ -62,7 +62,7 @@
             <div>
                 {% block header %}{% endblock header %}
                 {% for category, message in get_flashed_messages(with_categories=true) %}
-                <div class="m-4 p-4 text-sm {{ 'text-red-800 bg-red-100 dark:bg-gray-800 dark:text-red-400' if category == 'error' else 'text-green-800 bg-green-100 dark:bg-gray-800 dark:text-green-400'}} rounded-lg" role="alert">
+                <div class="m-4 p-4 text-sm {{ 'text-red-800 bg-red-100 dark:bg-gray-800 dark:text-red-400' if category == 'error' else ('text-green-800 bg-green-100 dark:bg-gray-800 dark:text-green-400' if category == 'success' else 'text-cyan-800 bg-cyan-100 dark:bg-gray-800 dark:text-cyan-400') }} rounded-lg" role="alert">
                     {{ message }}
                 </div>
                 {% endfor %}
