@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Aide{% endblock title %}
+
+{% set current_page = 'help' %}
+{% block navigation %}{% include"_navigation.html" with context %}{% endblock navigation %}
+
+{% block content %}
+<div class="px-8 py-2">
+    <p>
+        <span class="font-bold">Mercury Cloud</span> est une application de stockage de fichiers en ligne. Vous pouvez téléverser des fichiers de tout type et de toute taille. Les fichiers sont stockés sur un serveur distant et vous pouvez y accéder à tout moment.
+    </p>
+    <p>
+        Pour téléverser un fichier, cliquez sur le bouton "Ajouter un fichier" en haut de la page. Vous pouvez également glisser-déposer un fichier dans la zone de téléversement.
+    </p>
+</div>
+{% endblock %}

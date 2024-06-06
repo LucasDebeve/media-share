@@ -7,6 +7,9 @@
 {% set delete_after = settings.duration_days %}
 {% set keep_files = settings.keep_files %}
 
+{% set current_page = 'settings' %}
+{% block navigation %}{% include"_navigation.html" with context %}{% endblock navigation %}
+
 {% block content %}
   <form action="{{ url_for('pages.update_settings') }}" method="post" class="flex flex-col gap-5 p-8">
     <div>

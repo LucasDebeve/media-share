@@ -62,7 +62,13 @@ def home():
             flash('Aucun fichier sélectionné', category='error')
             return redirect(request.url)
         if file and (len(settings['allowed_extensions']) == 0 or file.filename.split('.')[-1] in settings['allowed_extensions']):
-            filename = secure_filename(file.filename)
+            if file.content_length > settings['max_file_size']:
+                flash('Fichier trop volumineux', category='error')
+                return redirect(request.url)
+            if request.form.get('temp') == 'on':
+                filename = secure_filename(file.filename)
+            else:
+                filename = f"{settings['keep_files']}{secure_filename(file.filename)}"
             # Save file into uploads folder
             file.save(f'uploads/{filename}')
             flash('Fichier téléversé', category='success')
@@ -83,7 +89,7 @@ def home():
         else:
             flash('Fichier introuvable', category='error')
             return redirect(url_for('pages.home'))
-    print("ya rien")
+
     return render_template("pages/home.html", files=os.listdir('uploads'))
 
 @bp.route('/delete/<filename>', methods=['GET', 'POST'])
@@ -148,3 +154,7 @@ def update_settings():
     settings['keep_files'] = request.form.get('keep_files')
     flash('Paramètres mis à jour', category='success')
     return redirect(url_for('pages.settingsUpdate'))
+
+@bp.route('/help')
+def help():
+    return render_template("pages/help.html")

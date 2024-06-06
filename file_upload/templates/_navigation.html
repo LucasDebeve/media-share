@@ -8,7 +8,7 @@
         </h1>
     </div>
     <ul class="flex-1 flex flex-col pb-32 gap-5 justify-center">
-        <li class="flex justify-center md:justify-start p-5 rounded-2xl bg-violet-800 hover:cursor-pointer active:bg-violet-700 transition-colors">
+        <li class="flex justify-center md:justify-start p-5 rounded-2xl {{ 'bg-violet-800 active:bg-violet-700' if current_page == 'home' else 'hover:bg-gray-900 active:bg-gray-800'}}  hover:cursor-pointer transition-colors">
             <a href="{{ url_for('pages.home') }}">
                 <span class="material-symbols-outlined align-middle text-2xl mr-2">
                     folder
@@ -18,7 +18,7 @@
                 </span>
             </a>
         </li>
-        <li class="flex justify-center md:justify-start p-5 rounded-2xl hover:bg-gray-900 hover:cursor-pointer active:bg-gray-800 transition-colors">
+        <li class="flex justify-center md:justify-start p-5 rounded-2xl hover:cursor-pointer {{ 'bg-violet-800 active:bg-violet-700' if current_page == 'partage' else 'hover:bg-gray-900 active:bg-gray-800'}} transition-colors">
             <a href="/">
                 <span class="material-symbols-outlined align-middle text-2xl mr-2">
                     folder_shared
@@ -30,8 +30,8 @@
         </li>
     </ul>
     <ul class="flex flex-col gap-5 justify-end">
-        <li class="flex justify-center md:justify-start p-5 rounded-2xl hover:bg-gray-900 hover:cursor-pointer active:bg-gray-800 transition-colors">
-            <a href="/">
+        <li class="flex justify-center md:justify-start p-5 rounded-2xl hover:cursor-pointer {{ 'bg-violet-800 active:bg-violet-700' if current_page == 'help' else 'hover:bg-gray-900 active:bg-gray-800'}} transition-colors">
+            <a href="{{ url_for('pages.help') }}">
                 <span class="material-symbols-outlined align-middle text-2xl mr-2">
                     help
                 </span>

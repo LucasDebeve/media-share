@@ -9,6 +9,9 @@
 
 {% block title %}{{ title }}{% endblock title %}
 
+{% set current_page = 'home' %}
+{% block navigation %}{% include"_navigation.html" with context %}{% endblock navigation %}
+
 {% block content %}
 <div class="flex justify-between h-full w-full items-start">
   <div class="flex-1 grid grid-cols-4 gap-4 px-8 py-2">
