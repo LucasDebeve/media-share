@@ -34,9 +34,20 @@ settings = {
         "exe", "msi", "deb", "rpm", "apk",
         "ttf", "otf", "woff", "woff2",
     ],
-    'allowed_extensions': [],
+    'allowed_extensions': [
+        "jpg", "jpeg", "png", "gif", "bmp", "svg",
+        "mp3", "wav", "ogg", "flac", "aac",
+        "mp4", "mkv", "avi", "mov", "wmv", "flv",
+        "ppt", "pptx", "odp",
+        "doc", "docx", "odt", "pdf", "txt",
+        "xls", "xlsx", "ods",
+        "zip", "rar", "7z", "tar", "gz",
+        "html", "css", "js", "py", "java", "c", "cpp", "cs", "php", "rb", "sh",
+        "exe", "msi", "deb", "rpm", "apk",
+        "ttf", "otf", "woff", "woff2",
+    ],
     'duration_days': 3,
-    'keep_files': ['keep_'],
+    'keep_files': 'keep_',
 }
 
 @bp.route('/', methods=['GET', 'POST'])
@@ -104,30 +115,36 @@ def settingsUpdate():
 
 @bp.route('/settings/update', methods=['POST'])
 def update_settings():
+    # Get the post data
+
     # Verify max_file_size is in list of allowed values 
     # 1Mo, 10Mo, 100Mo, 1Go, 2Go, 5Go
-    if not request.form.get('max_file_size').isdigit() or int(request.form.get('max_file_size')) not in settings['authorized_max_size']:
-        flash('Valeur de taille de fichier non autorisée', category='error')
-        return redirect(url_for('pages.settings'))
+    if not request.form.get('max_file_size').isdigit() or int(request.form.get('max_file_size')) not in [size['value'] for size in settings['authorized_max_size']]:
+        flash('Valeur de taille de fichier non autorisée : pas un nombre : ' + request.form.get('max_file_size'), category='error')
+        return redirect(url_for('pages.settingsUpdate'))
+
+    print(request.form.getlist('allowed_extensions'))
 
     # Verify allowed_extensions not contains empty value and all values are in authorized_extensions
-    if '' in request.form.get('allowed_extensions').split(',') or not all(ext in settings['authorized_extensions'] for ext in request.form.get('allowed_extensions').split(',')):
+    if '' in request.form.getlist('allowed_extensions') or not all([ext in settings['authorized_extensions'] for ext in request.form.getlist('allowed_extensions')]):
         flash('Valeur d\'extensions autorisées non autorisée', category='error')
-        return redirect(url_for('pages.settings'))
+        return redirect(url_for('pages.settingsUpdate'))
 
     # Verify duration_days is between 1 and 30
     if not request.form.get('duration_days').isdigit() or int(request.form.get('duration_days')) < 1 or int(request.form.get('duration_days')) > 30:
         flash('Valeur de durée non autorisée', category='error')
-        return redirect(url_for('pages.settings'))
+        return redirect(url_for('pages.settingsUpdate'))
+
+    print(request.form.get('keep_files'))
 
     # Verify keep_files not contains empty value
-    if '' in request.form.get('keep_files').split(','):
+    if request.form.get('keep_files') == '':
         flash('Valeur de fichiers à conserver non autorisée', category='error')
-        return redirect(url_for('pages.settings'))
+        return redirect(url_for('pages.settingsUpdate'))
 
     settings['max_file_size'] = int(request.form.get('max_file_size'))
-    settings['allowed_extensions'] = request.form.get('allowed_extensions').split(',')
+    settings['allowed_extensions'] = request.form.getlist('allowed_extensions')
     settings['duration_days'] = int(request.form.get('duration_days'))
-    settings['keep_files'] = request.form.get('keep_files').split(',')
+    settings['keep_files'] = request.form.get('keep_files')
     flash('Paramètres mis à jour', category='success')
-    return redirect(url_for('pages.settings'))
+    return redirect(url_for('pages.settingsUpdate'))
