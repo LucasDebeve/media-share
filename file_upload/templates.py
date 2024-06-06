@@ -61,6 +61,14 @@ def file_type(filename: str):
     except Exception as e:
         return 'de type inconnu'
 
+@bp.app_template_filter("readable_size")
+def readable_size(size: int):
+    for unit in ['b', 'Kb', 'Mb', 'Gb', 'Tb']:
+        if size < 1024:
+            return f"{size:.2f} {unit}"
+        size /= 1024
+    return f"{size:.2f} Po"
+
 @bp.app_context_processor
 def inject_now():
     return {'now': datetime.utcnow()}

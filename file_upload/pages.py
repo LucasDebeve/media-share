@@ -12,6 +12,12 @@ import time
 
 bp = Blueprint('pages', __name__)
 
+def get_total_size():
+    total_size = 0
+    for file in os.listdir('uploads'):
+        total_size += os.path.getsize(f'uploads/{file}')
+    return total_size
+
 settings = {
     'authorized_max_size': [
         {'value': 1024 * 1024, 'label': '1 Mo', 'sublabel': 'Parfait pour des documents ou des images de petite taille.'},
@@ -48,6 +54,7 @@ settings = {
     ],
     'duration_days': 3,
     'keep_files': 'keep_',
+    'total_size': get_total_size(),
 }
 
 @bp.route('/', methods=['GET', 'POST'])
@@ -85,12 +92,14 @@ def home():
     if filename:
         file = os.path.join('uploads', filename)
         if os.path.exists(file):
-            return render_template("pages/home.html", files=os.listdir('uploads'), fileDetails=filename)
+            return render_template("pages/home.html", files=os.listdir('uploads'), fileDetails=filename, settings=settings)
         else:
             flash('Fichier introuvable', category='error')
             return redirect(url_for('pages.home'))
 
-    return render_template("pages/home.html", files=os.listdir('uploads'))
+    settings['total_size'] = get_total_size()
+
+    return render_template("pages/home.html", files=os.listdir('uploads'), settings=settings)
 
 @bp.route('/delete/<filename>', methods=['GET', 'POST'])
 def delete(filename):
@@ -102,7 +111,10 @@ def delete(filename):
         else:
             flash('Suppression annulée', category='info')
         return redirect(url_for('pages.home'))
-    return render_template("pages/delete.html", filename=filename)
+
+    settings['total_size'] = get_total_size()
+
+    return render_template("pages/delete.html", filename=filename, settings=settings)
 
 
 @bp.route('/download/<filename>')
@@ -117,6 +129,7 @@ def show(filename):
 
 @bp.route('/settings')
 def settingsUpdate():
+    settings['total_size'] = get_total_size()
     return render_template("pages/settings.html", settings=settings)
 
 @bp.route('/settings/update', methods=['POST'])
@@ -157,4 +170,5 @@ def update_settings():
 
 @bp.route('/help')
 def help():
-    return render_template("pages/help.html")
+    settings['total_size'] = get_total_size()
+    return render_template("pages/help.html", settings=settings)
