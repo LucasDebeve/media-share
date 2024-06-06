@@ -65,17 +65,17 @@
       <img id="file_content" src="{{ url_for('pages.show', filename=fileDetails|default('no')) }}" alt="{{ fileDetails|default('no') }}" class="rounded-lg object-cover max-h-[50svh]">
     {% endif %}
     <div class="flex justify-center gap-3">
-      <a href="{{ url_for('pages.show', filename=fileDetails|default('no')) }}" class="bg-neutral-300 rounded-lg flex justify-center items-center p-2">
+      <a href="{{ url_for('pages.show', filename=fileDetails|default('no')) }}" class="bg-neutral-300 rounded-lg flex justify-center items-center p-2 hover:bg-neutral-200 transition-colors">
         <span class="material-symbols-outlined">
           visibility
         </span>
       </a>
-      <a href="{{ url_for('pages.download', filename=fileDetails|default('no')) }}" class="bg-neutral-300 rounded-lg flex justify-center items-center p-2">
+      <a href="{{ url_for('pages.download', filename=fileDetails|default('no')) }}" class="bg-neutral-300 rounded-lg flex justify-center items-center p-2 hover:bg-neutral-200 transition-colors">
         <span class="material-symbols-outlined">
           download
         </span>
       </a>
-      <a href="{{ url_for('pages.delete', filename=fileDetails|default('no')) }}" class="bg-neutral-300 rounded-lg flex justify-center items-center p-2">
+      <a href="{{ url_for('pages.delete', filename=fileDetails|default('no')) }}" class="bg-neutral-300 rounded-lg flex justify-center items-center p-2 hover:bg-neutral-200 transition-colors">
         <span class="material-symbols-outlined">
           delete
         </span>
